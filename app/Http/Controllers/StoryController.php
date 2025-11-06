@@ -22,8 +22,8 @@ class StoryController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-         $user = $request->user(); 
-
+        $user = $request->user();
+        //$user = \App\Models\User::first();
         $stories = Story::query()->where(['user_id' => $user->id])->get();
 
         if ($stories->isEmpty()) {
@@ -33,7 +33,8 @@ class StoryController extends Controller
             ], Response::HTTP_OK);
         }
 
-        $stories = StoryResource::collection(Story::all());
+        //$stories = StoryResource::collection(Story::all()); //todas las historias de todos los usuarios
+        $stories = StoryResource::collection($stories);
 
         return response()->json([
             "success" => true,
@@ -63,7 +64,7 @@ class StoryController extends Controller
 
 
             DB::beginTransaction();
-            Story::query()->create([
+            $story = Story::query()->create([
                 'story_token'   => Str::uuid()->toString(),
                 'random_word'   => $request->Word,
                 'random_place'  => $request->Place,
@@ -76,7 +77,8 @@ class StoryController extends Controller
 
             return response()->json([
                 "success" => true,
-                "message" => "Escrito creado"
+                "message" => "Escrito creado",
+                $story
             ], Response::HTTP_CREATED);
         } catch (\Exception $e) {
 
@@ -97,11 +99,11 @@ class StoryController extends Controller
      * @return JsonResponse
      * @throws \Throwable
      */
-    public function show(string $storyToken): JsonResponse
+    public function show(Request $request): JsonResponse
     {
         try {
 
-            $story = Story::query()->where(['story_token' => $storyToken])->first();
+            $story = Story::query()->where(['story_token' => $request->storyToken])->first();
 
             if (!$story) {
                 return response()->json([
@@ -137,19 +139,19 @@ class StoryController extends Controller
      * @return JsonResponse
      * @throws \Throwable
      */
-    public function update(Request $request, string $storyToken): JsonResponse
+    public function update(Request $request): JsonResponse
     {
         try {
             $request->validate([
-                'Word'      => 'required|string',
-                'Place'     => 'required|string',
+                'story_token' => $request->storyToken,
+                
                 'Title'     => 'sometimes|string',
                 'Content'   => 'required|string',
                 'Words'     => 'required|numeric',
                 'UserId'    => 'required|exists:users,id',
             ]);
 
-            $story = Story::query()->where(['story_token' => $storyToken])->first();
+            $story = Story::query()->where(['story_token' => $request->storyToken])->first();
 
             if (!$story) {
                 return response()->json([
@@ -196,11 +198,11 @@ class StoryController extends Controller
      * @return JsonResponse
      * @throws \Throwable
      */
-    public function destroy(string $storyToken): JsonResponse
+    public function destroy(Request $request): JsonResponse
     {
 
         try {
-            $story = Story::query()->where(['story_token' => $storyToken])->first();
+            $story = Story::query()->where(['story_token' => $request->storyToken])->first();
 
             if (!$story) {
                 return response()->json([
