@@ -3,15 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\StoryResource;
+use App\Models\RandomWord;
 use App\Models\Story;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use App\Traits\WordCountTrait;
+
 
 class StoryController extends Controller
 {
+    use WordCountTrait;
+
+    public function randomWords(): JsonResponse
+    {
+        try {
+            $word = \App\Models\RandomWord::where('type', 'word')->inRandomOrder()->value('value');
+            $place = \App\Models\RandomWord::where('type', 'place')->inRandomOrder()->value('value');
+
+            if (!$word || !$place) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No hay suficientes palabras o lugares en la base de datos.'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            return response()->json([
+                'success' => true,
+                'word' => $word,
+                'place' => $place,
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
     /**
      * Devuelve un listado de historias del usuario.
      *      TODO: esto devuelve todos los registros de historias!
@@ -52,33 +84,49 @@ class StoryController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        \Log::info("STORE REQUEST:", $request->all());
+
         try {
             $request->validate([
-                'Word'      => 'required|string',
-                'Place'     => 'required|string',
-                'Title'     => 'sometimes|string',
-                'Content'   => 'required|string',
-                'Words'     => 'required|numeric',
-                'UserId'    => 'required|exists:users,id',
+                'title'     => 'sometimes|string',
+                'content'   => 'required|string',
+                'user_id'   => 'required|exists:users,id',
+                'word'      => 'required|string',
+                'place'     => 'required|string',
             ]);
+
+
+            $word = $request->word;
+            $place = $request->place;
+
+            if ( //stripos busca sin importarle mayus y minusculas
+                stripos($request->content, $word) === false ||
+                stripos($request->content, $place) === false
+            ) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "La historia debe incluir la palabra '{$word}' y el lugar '{$place}'."
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
 
 
             DB::beginTransaction();
             $story = Story::query()->create([
                 'story_token'   => Str::uuid()->toString(),
-                'random_word'   => $request->Word,
-                'random_place'  => $request->Place,
-                'title'         => $request->Title,
-                'content'       => $request->Content,
-                'word_count'    => $request->Words ?? 0,
-                'user_id'       => $request->UserId,
+                'random_word'   => $request->word,
+                'random_place'  => $request->place,
+                'title'         => $request->title,
+                'content'       => $request->content,
+                'word_count'    => $this->countWords($request->content),
+                'user_id'       => $request->user_id,
             ]);
+
             DB::commit();
 
             return response()->json([
                 "success" => true,
                 "message" => "Escrito creado",
-                $story
+                "story"   => new StoryResource($story)
             ], Response::HTTP_CREATED);
         } catch (\Exception $e) {
 
@@ -142,14 +190,6 @@ class StoryController extends Controller
     public function update(Request $request): JsonResponse
     {
         try {
-            $request->validate([
-                'story_token' => $request->storyToken,
-                
-                'Title'     => 'sometimes|string',
-                'Content'   => 'required|string',
-                'Words'     => 'required|numeric',
-                'UserId'    => 'required|exists:users,id',
-            ]);
 
             $story = Story::query()->where(['story_token' => $request->storyToken])->first();
 
@@ -159,16 +199,37 @@ class StoryController extends Controller
                     "error" => "No se encontró el escrito"
                 ], Response::HTTP_NOT_FOUND);
             }
+            $request->validate([
+                'story_token' => $request->storyToken,
+                'title'     => 'sometimes|string',
+                'content'   => 'required|string',
+                'user_id'   => 'required|exists:users,id',
+                'word'      => 'required|string',
+                'place'     => 'required|string',
+            ]);
+
+            $word = $request->Word ?? $story->random_word;
+            $place = $request->Place ?? $story->random_place;
+
+            if (
+                stripos($request->Content, $word) === false ||
+                stripos($request->Content, $place) === false
+            ) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "La historia debe incluir la palabra '{$word}' y el lugar '{$place}'."
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
 
             DB::beginTransaction();
 
             $story->update([
-                'random_word'   => $request->Word ?? $story->random_word,
-                'random_place'  => $request->Place ?? $story->random_place,
-                'title'         => $request->Title ?? $story->title,
-                'content'       => $request->Content ?? $story->content,
-                'word_count'    => $request->Words ?? $story->word_count,
-                'user_id'       => $request->UserId ?? $story->user_id,
+                'random_word'   => $request->word,
+                'random_place'  => $request->place,
+                'title'         => $request->title ?? $story->title,
+                'content'       => $request->content ?? $story->content,
+                'word_count'    => $this->countWords($request->Content),
+                'user_id'       => $request->user_id ?? $story->user_id,
             ]);
 
             DB::commit();
