@@ -193,6 +193,9 @@ class StoryController extends Controller
 
             $story = Story::query()->where(['story_token' => $request->storyToken])->first();
 
+                    \Log::info("STORE REQUEST:", $request->all());
+
+
             if (!$story) {
                 return response()->json([
                     "success" => false,
@@ -204,31 +207,27 @@ class StoryController extends Controller
                 'title'     => 'sometimes|string',
                 'content'   => 'required|string',
                 'user_id'   => 'required|exists:users,id',
-                'word'      => 'required|string',
-                'place'     => 'required|string',
             ]);
 
-            $word = $request->Word ?? $story->random_word;
-            $place = $request->Place ?? $story->random_place;
+            $word = $request->word ?? $story->random_word;
+$place = $request->place ?? $story->random_place;
 
-            if (
-                stripos($request->Content, $word) === false ||
-                stripos($request->Content, $place) === false
-            ) {
-                return response()->json([
-                    "success" => false,
-                    "message" => "La historia debe incluir la palabra '{$word}' y el lugar '{$place}'."
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+if (
+    stripos($request->content, $word) === false ||
+    stripos($request->content, $place) === false
+) {
+    return response()->json([
+        "success" => false,
+        "message" => "La historia debe incluir la palabra '{$word}' y el lugar '{$place}'."
+    ], Response::HTTP_UNPROCESSABLE_ENTITY);
+}
 
             DB::beginTransaction();
 
             $story->update([
-                'random_word'   => $request->word,
-                'random_place'  => $request->place,
                 'title'         => $request->title ?? $story->title,
                 'content'       => $request->content ?? $story->content,
-                'word_count'    => $this->countWords($request->Content),
+                'word_count'    => $this->countWords($request->content),
                 'user_id'       => $request->user_id ?? $story->user_id,
             ]);
 
