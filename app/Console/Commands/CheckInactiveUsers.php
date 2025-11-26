@@ -19,13 +19,17 @@ class CheckInactiveUsers extends Command
 
         // usuarios que no han escrito en 7 días
         //TODO: evitar enviar más de un mail por semana
-        $users = User::whereDoesntHave('stories', function($check) use ($sevenDaysAgo) {
+        $users = User::whereDoesntHave('stories', function ($check) use ($sevenDaysAgo) {
             $check->where('created_at', '>=', $sevenDaysAgo);
         })->get();
 
         foreach ($users as $user) {
+                        sleep(2); //Mailtrap solo permite un email por segundo
+
             Mail::to($user->email)->send(new InactiveUserMail($user));
-            $this->info("Mail enviado a: ".$user->email);
+            $this->info("Mail enviado a: " . $user->email);
+
+            sleep(2); //Mailtrap solo permite un email por segundo
         }
 
         return Command::SUCCESS;
