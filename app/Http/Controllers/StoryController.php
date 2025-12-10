@@ -123,6 +123,23 @@ class StoryController extends Controller
 
             DB::commit();
 
+            // actualiza actividad del usuario
+            $status = $story->user->inactivity;
+
+            if ($status) {
+                // resetea el ciclo de inactividad
+                $status->update([
+                    'last_story_at' => now(),
+                    'first_email_sent_at' => null,
+                    'second_email_sent_at' => null,
+                ]);
+            } else {
+                // crear registro si no existe
+                $story->user->inactivity()->create([
+                    'last_story_at' => now(),
+                ]);
+            }
+
             return response()->json([
                 "success" => true,
                 "message" => "Escrito creado",
@@ -193,7 +210,7 @@ class StoryController extends Controller
 
             $story = Story::query()->where(['story_token' => $request->storyToken])->first();
 
-                    \Log::info("STORE REQUEST:", $request->all());
+            \Log::info("STORE REQUEST:", $request->all());
 
 
             if (!$story) {
@@ -210,17 +227,17 @@ class StoryController extends Controller
             ]);
 
             $word = $request->word ?? $story->random_word;
-$place = $request->place ?? $story->random_place;
+            $place = $request->place ?? $story->random_place;
 
-if (
-    stripos($request->content, $word) === false ||
-    stripos($request->content, $place) === false
-) {
-    return response()->json([
-        "success" => false,
-        "message" => "La historia debe incluir la palabra '{$word}' y el lugar '{$place}'."
-    ], Response::HTTP_UNPROCESSABLE_ENTITY);
-}
+            if (
+                stripos($request->content, $word) === false ||
+                stripos($request->content, $place) === false
+            ) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "La historia debe incluir la palabra '{$word}' y el lugar '{$place}'."
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
 
             DB::beginTransaction();
 

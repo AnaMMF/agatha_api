@@ -51,4 +51,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Story::class, 'user_id');
     }
+
+
+    public function inactivity()
+    {
+        return $this->hasOne(\App\Models\UserInactivityStatus::class);
+    }
 }

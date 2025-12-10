@@ -2,36 +2,80 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Mail\FirstInactiveUserMail;
+use App\Mail\SecondInactiveUserMail;
 use App\Models\User;
-use App\Mail\InactiveUserMail;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
 
 class CheckInactiveUsers extends Command
 {
     protected $signature = 'users:check-inactive';
-    protected $description = 'Send email to users who have not written in 7 days';
+    protected $description = 'Envía avisos por inactividad a los usuarios';
 
     public function handle()
     {
-        $sevenDaysAgo = Carbon::now()->subDays(7);
-
-        // usuarios que no han escrito en 7 días
-        //TODO: evitar enviar más de un mail por semana
-        $users = User::whereDoesntHave('stories', function ($check) use ($sevenDaysAgo) {
-            $check->where('created_at', '>=', $sevenDaysAgo);
-        })->get();
+        $users = User::with(['stories', 'inactivity'])->get();
 
         foreach ($users as $user) {
-                        sleep(2); //Mailtrap solo permite un email por segundo
+            $lastStory = $user->stories()->latest()->first();
 
-            Mail::to($user->email)->send(new InactiveUserMail($user));
-            $this->info("Mail enviado a: " . $user->email);
+            if (!$lastStory) {
+                continue;
+            }
 
-            sleep(2); //Mailtrap solo permite un email por segundo
+            $days = $lastStory->created_at->diffInDays(now());
+
+            $this->info("Usuario {$user->email} → días: $days");
+
+            // Crear registro si no existe
+            $status = $user->inactivity ?: $user->inactivity()->create([
+                'last_story_at' => $lastStory->created_at
+            ]);
+
+            // RESET al volver a escribir   
+            if ($days < 1) {
+                $status->update([
+                    'first_email_sent_at' => null,
+                    'second_email_sent_at' => null,
+                    'last_story_at' => $lastStory->created_at
+                ]);
+                continue;
+            }
+
+            // 7 días → primer aviso (solo se envía una vez)
+            if ($days >= 1 && $days < 5) {
+                if (!$status->first_email_sent_at) {
+                    try {
+                        Mail::to($user->email)->send(new FirstInactiveUserMail($user));
+                        $this->info("Primer aviso enviado a {$user->email}");
+                        usleep(500000); // 0.5 segundos
+                        $status->update(['first_email_sent_at' => now()]);
+                    } catch (\Throwable $e) {
+                        $this->error("Error enviando primer aviso a {$user->email}: " . $e->getMessage());
+                        // opcional: logear
+                        \Log::error("Error mail first to {$user->email}", ['exception' => $e]);
+                    }
+                }
+                continue;
+            }
+
+            // 25 días → segundo aviso (solo una vez)
+            if ($days >= 5) {
+                if (!$status->second_email_sent_at) {
+                    try {
+                        Mail::to($user->email)->send(new SecondInactiveUserMail($user));
+                        $this->info("Segundo aviso enviado a {$user->email}");
+                        usleep(500000); // 0.5 segundos
+                        $status->update(['second_email_sent_at' => now()]);
+                    } catch (\Throwable $e) {
+                        $this->error("Error enviando segundo aviso a {$user->email}: " . $e->getMessage());
+                        \Log::error("Error mail second to {$user->email}", ['exception' => $e]);
+                    }
+                }
+            }
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

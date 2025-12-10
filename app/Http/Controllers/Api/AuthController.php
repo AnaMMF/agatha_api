@@ -80,7 +80,7 @@ class AuthController extends Controller
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:users,email,' . $user->id,
             'password' => [
-                'required',
+                'nullable',
                 'confirmed',
                 Password::min(8)
                     ->letters()

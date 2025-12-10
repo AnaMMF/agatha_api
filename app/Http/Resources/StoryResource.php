@@ -22,6 +22,9 @@ class StoryResource extends JsonResource
             'Content'   => $this->content,
             'Words'     => $this->word_count,
             'UserId'    => $this->user_id,
+            'Created'   => $this->created_at,
+            'Updated'   => $this->updated_at,
+            
         ];
     }
 }
