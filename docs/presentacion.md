@@ -1,7 +1,7 @@
 ---
-marp: true
+marp: false
 theme: gaia
-size: 4:3                
+size: 16:9                
 _class: lead
 paginate: true
 backgroundColor: #fff
@@ -11,9 +11,8 @@ style: |
         box-sizing: border-box;
         width: 100%;
         height: 100%;
-        padding: 1in; 
         margin: 0;
-        font-size: calc(1vw + 1vh);
+        font-size: calc(0.6vw + 0.6vh);
     }
 
     .container {
@@ -201,6 +200,8 @@ En este capítulo se recogen los elementos clave que definen cómo debe funciona
 
 A continuación se representan los casos de uso básicos del sistema, centrándonos en la interacción entre el usuario y la plataforma.
 
+---
+
 ![Diagrama casos de uso](Uso.drawio.svg)
 
 ---
@@ -310,7 +311,7 @@ El flujo es el siguiente:
 
 #### Controlador AuthController
 
-```php
+
 public function login(Request $request)
 {
     $data = $request->validate([
@@ -331,7 +332,7 @@ public function login(Request $request)
         'user' => $user,
     ]);
 }
-```
+
 
 ---
 
@@ -341,7 +342,7 @@ El registro exige contraseñas fuertes (mínimo 8 caracteres, mayúsculas, minú
 
 #### Validación de registro:
 
-```php
+
 
 $data = $request->validate([
     'name' => 'required|string|max:255',
@@ -352,11 +353,11 @@ $data = $request->validate([
         Password::min(8)->letters()->mixedCase()->numbers()->symbols(),
     ],
 ]);
-```
+
 
 #### Actualización de usuario:
 
-```php
+
 $data = $request->validate([
     'name' => 'sometimes|string|max:255',
     'email' => 'sometimes|email|unique:users,email,' . $user->id,
@@ -367,7 +368,7 @@ $data = $request->validate([
     ],
 ]);
 
-```
+
 
 ### 4.3. Frontend de Autenticación (Vue 3 + Pinia)
 
@@ -375,7 +376,7 @@ El frontend almacena el token en LocalStorage y lo añade automáticamente con u
 
 #### Interceptor en api.js
 
-```php
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
@@ -383,12 +384,12 @@ api.interceptors.request.use((config) => {
   }
   return config
 })
-```
+
 ---
 
 #### Ejemplo real: vista LoginView.vue
 
-```php
+
 
 async function handleLogin() {
   const data = await login(email.value, password.value)
@@ -402,12 +403,12 @@ async function handleLogin() {
   authStore.setToken(data.token)
   router.push('/home')
 }
-```
+
 
 
 ### 4.4. Rutas API
 
-```php
+
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -426,7 +427,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::put('/user', [AuthController::class, 'update']);
 });
-```
+
 
 ### 4.5. Generación de palabra y lugar aleatorios
 
@@ -436,17 +437,17 @@ word → palabras
 
 place → lugares
 
-```php
+
 $word = RandomWord::where('type', 'word')->inRandomOrder()->value('value');
 $place = RandomWord::where('type', 'place')->inRandomOrder()->value('value');
-```
+
 ---
 
 ### 4.6. Validación de historias
 
 Se exige que la historia incluya la palabra y el lugar proporcionados:
 
-```php
+
 if (
     stripos($request->content, $word) === false ||
     stripos($request->content, $place) === false
@@ -456,12 +457,12 @@ if (
         "message" => "La historia debe incluir la palabra '{$word}' y el lugar '{$place}'."
     ], 422);
 }
-```
+
 
 
 ### 4.7. Guardado de historias con token único
 
-```php
+
 $story = Story::create([
     'story_token' => Str::uuid()->toString(),
     'random_word' => $request->word,
@@ -471,11 +472,11 @@ $story = Story::create([
     'word_count' => $this->countWords($request->content),
     'user_id' => $request->user_id,
 ]);
-```
+
 
 ### 4.8. Reset de inactividad al escribir
 
-```php
+
 $status = $story->user->inactivity;
 
 if ($status) {
@@ -490,23 +491,23 @@ if ($status) {
     ]);
 }
 
-```
+
 ---
 
 ### 4.9. Frontend de historias (Vue)
 
 #### Obtener historias
 
-```php
+
 export async function getStories() {
   const { data } = await api.get('/story/list')
   return data
 }
-```
+
 
 #### Crear historia
 
-```php
+
 export async function createStory(story) {
   return api.post('/story/store', {
     title: story.title,
@@ -516,12 +517,12 @@ export async function createStory(story) {
     user_id: story.user_id,
   })
 }
-```
+
 
 
 ### 4.10. Formateo de fechas (frontend)
 
-```php
+
 function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString('es-ES', {
     year: 'numeric',
@@ -529,7 +530,7 @@ function formatDate(dateString) {
     day: 'numeric'
   })
 }
-```
+
 
 ### 4.11. Sistema de avisos automáticos por inactividad
 
@@ -544,7 +545,7 @@ El comando users:check-inactive recorre todos los usuarios y:
 
 Código real del comando:
 
-```php
+
 
 $lastStory = $user->stories()->latest()->first();
 $days = $lastStory->created_at->diffInDays(now());
@@ -552,37 +553,39 @@ $days = $lastStory->created_at->diffInDays(now());
 $status = $user->inactivity ?: $user->inactivity()->create([
     'last_story_at' => $lastStory->created_at
 ]);
-```
+
 
 Primer aviso:
 
-```php
+
 
 if ($days >= 1 && $days < 5) {
+
     if (!$status->first_email_sent_at) {
         Mail::to($user->email)->send(new FirstInactiveUserMail($user));
         $status->update(['first_email_sent_at' => now()]);
     }
 }
-```
+
 
 Segundo aviso:
 
-```php
+
 if ($days >= 5) {
+  
     if (!$status->second_email_sent_at) {
         Mail::to($user->email)->send(new SecondInactiveUserMail($user));
         $status->update(['second_email_sent_at' => now()]);
     }
 }
 
-```
+
 
 ---
 
 ### 4.12. Mailable real
 
-```php
+
 class FirstInactiveUserMail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -597,13 +600,13 @@ class FirstInactiveUserMail extends Mailable
         );
     }
 }
-```
+
 
 ### 4.13. Plantilla Markdown del email
 
-```php
+
 @component('mail::message')
-# ¡Te echamos de menos, {{ $user->name }}!
+¡Te echamos de menos, {{ $user->name }}!
 
 Hace más de una semana que no escribes una historia.
 
@@ -614,14 +617,11 @@ Volver a escribir
 Gracias,<br>
 El equipo de Agatha
 @endcomponent
-```
+
 
 ---
 
 ### 4.14. Estructura de carpetas del backend (Laravel)
-
-<details>
-<summary><strong>Haz clic para mostrar/ocultar el árbol completo de carpetas</strong></summary>
 
 | app/                             | database/                                                       |
 | -------------------------------- | --------------------------------------------------------------- |
@@ -656,7 +656,6 @@ El equipo de Agatha
 | └── logs/                | ├── config/                    |
 |                          | └── vendor/                    |
 
-</details>
 
 **Nota**: Las carpetas estándar de Laravel (`bootstrap`, `config`, `vendor`, `public`, etc.) se han resumido para que quepa todo en dos columnas.
 
@@ -673,8 +672,6 @@ El equipo de Agatha
 
 ### 4.16. Estructura de carpetas del frontend (Vue 3 + Vite + Pinia + Vue Router)
 
-<details>
-<summary><strong>Haz clic para mostrar/ocultar el árbol completo del frontend</strong></summary>
 
 | Raíz del proyecto      | src/ (código principal)    |
 | ---------------------- | -------------------------- |
@@ -696,16 +693,7 @@ El equipo de Agatha
 |                        | │ ├── StoriesView.vue      |
 |                        | │ └── StoryDetailView.vue  |
 
-</details>
 
-**Resumen rápido:**
-
-src/
-├── components/ → Sidebar.vue
-├── router/ → index.js
-├── services/ → api.js (llamadas al backend Laravel)
-├── stores/ → Pinia: auth.js + stories.js
-└── views/ → 7 vistas principales (Login, Register, Dashboard, Stories…)
 
 ---
 
@@ -838,25 +826,25 @@ Aunque el proyecto se ha desarrollado y probado principalmente en entorno local 
 - Se importó exitosamente en un servicio MySQL de Railway.
 - La conexión remota desde el entorno local de Laravel se configuró correctamente modificando las variables de entorno en `.env`:
 
-```env
+
 DB_CONNECTION=mysql
 DB_HOST=[host Railway]
 DB_PORT=[puerto Railway]
 DB_DATABASE=[nombre BBDD]
 DB_USERNAME=[usuario]
 DB_PASSWORD=[contraseña]
-```
+
 ---
 Se verificó la conexión correcta ejecutando comandos como:
-```Bash
+
 php artisan config:clear
 php artisan cache:clear
 php artisan tinker
-```
+
 Y dentro de tinker:
-```PHP
+
 DB::connection()->getPdo();
-```
+
 El resultado confirmó la conexión exitosa a través del proxy de Railway (maglev.proxy.rlwy.net).
 
 

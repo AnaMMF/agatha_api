@@ -1,3 +1,17 @@
+---
+marp: true
+theme: gaia
+paginate: true
+lang: es
+size: 16:9                
+
+title: "Conclusiones"
+class: invert          
+titlepage: true
+titlepage-rule-color: "360049"
+titlepage-rule-height: 6
+---
+
 # 6. Bibliografía
 
 A continuación se recoge una lista de los recursos, documentación, tutoriales y materiales que han servido de apoyo durante el desarrollo del proyecto Agatha, junto a una breve descripción de qué se aprendió con cada uno.
@@ -5,6 +19,8 @@ A continuación se recoge una lista de los recursos, documentación, tutoriales 
 - **Documentación oficial de Laravel**  
   https://laravel.com/docs  
   Guía principal para entender controladores, modelos, migraciones, rutas, mailables, colas, scheduler y configuración general del framework.
+
+---
 
 - **Laravel Sanctum – Autenticación mediante tokens**  
   https://laravel.com/docs/sanctum  
@@ -14,6 +30,9 @@ A continuación se recoge una lista de los recursos, documentación, tutoriales 
   https://laravel.com/docs/eloquent  
   Recurso clave para aprender a trabajar con relaciones (`hasMany`, `belongsTo`, `hasOne`), consultas avanzadas y formateo de atributos desde el modelo.
 
+---
+
+
 - **Mailtrap – Testing de envío de correos**  
   https://mailtrap.io/  
   Utilizado para probar el envío real de correos sin necesidad de usar un servidor SMTP de producción. También ayudó a entender límites de envío y manejo de errores SMTP.
@@ -21,6 +40,9 @@ A continuación se recoge una lista de los recursos, documentación, tutoriales 
 - **Laravel Scheduler (tareas programadas)**  
   https://laravel.com/docs/scheduling  
   Fundamental para implementar el sistema automático de avisos por inactividad mediante `php artisan schedule:work` y comandos personalizados.
+
+---
+
 
 - **Markdown para documentación técnica**  
   https://www.markdownguide.org/basic-syntax/  
@@ -30,6 +52,9 @@ A continuación se recoge una lista de los recursos, documentación, tutoriales 
   https://laravel.com/docs/helpers  
   Sirvió para generar tokens únicos (`Str::uuid()`) y manipular cadenas y fechas.
 
+---
+
+
 - **Carbon – Manejo de fechas en PHP**  
   https://carbon.nesbot.com/docs/  
   Recurso clave para trabajar con intervalos de tiempo, diferencias en días, formateo de fechas y operaciones complejas con timestamps.
@@ -37,6 +62,9 @@ A continuación se recoge una lista de los recursos, documentación, tutoriales 
 - **Diagrams.net (Draw.io)**  
   https://app.diagrams.net/  
   Utilizado para realizar casos de uso, diagramas de clases y diagramas de flujo de manera visual y exportable a Markdown o imagen.
+
+---
+
 
 - **PHP The Right Way**  
   https://phptherightway.com/  

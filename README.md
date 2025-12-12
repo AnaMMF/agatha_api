@@ -15,7 +15,7 @@ Backend desarrollado en Laravel 12, encargado de gestionar:
 
 ### Requisitos
 
-- PHP 8.1 o superior
+- PHP 8.2 o superior
 - Composer
 - MySQL / MariaDB
 - Laragon / XAMPP / Laravel Sail
@@ -64,7 +64,7 @@ Instrucciones:
 1. Abrir phpMyAdmin o la herramienta correspondiente
 2. Crear la base de datos agatha
 3. Ir a la pestaña Importar
-4. Seleccionar el archivo agatha.sql
+4. Seleccionar el archivo agatha.sql del directorio public
 5. Hacer clic en Aceptar
 
 Incluye usuarios de prueba, historias, palabras, lugares y estado de inactividad.

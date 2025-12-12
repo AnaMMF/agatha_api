@@ -1,14 +1,12 @@
 # Agatha – Plataforma Creativa de Escritura
 
-Este repositorio contiene el proyecto **Agatha**, una aplicación web diseñada para motivar la escritura creativa mediante retos diarios, palabras aleatorias y un sistema automatizado de recordatorios por inactividad.
+Este repositorio contiene la API **Agatha**, una aplicación web diseñada para motivar la escritura creativa mediante palabras aleatorias y un sistema automatizado de recordatorios por inactividad.
 
 Incluye:
 
 - Backend desarrollado en **Laravel 12**
-- Frontend desarrollado en **Vue 3**
 - Base de datos MySQL
 - Documentación completa del proyecto en Markdown
-- Herramientas para generar un **libro PDF** de la memoria y una **presentación HTML** con Marp
 
 ---
 

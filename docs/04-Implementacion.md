@@ -10,6 +10,14 @@ class: invert
 titlepage: true
 titlepage-rule-color: "360049"
 titlepage-rule-height: 6
+style: |
+    .details {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-size: calc(0.6vw + 0.6vh);
+    }
 ---
 
 # 4. Implementación
@@ -105,7 +113,7 @@ api.interceptors.request.use((config) => {
   return config
 })
 ```
-
+---
 #### Ejemplo real: vista LoginView.vue
 ```php
 
@@ -224,7 +232,7 @@ export async function getStories() {
   return data
 }
 ```
-
+---
 #### Crear historia
 ```php
 export async function createStory(story) {
@@ -250,6 +258,7 @@ function formatDate(dateString) {
 }
 ```
 ---
+
 ### 4.11. Sistema de avisos automáticos por inactividad
 
 El comando users:check-inactive recorre todos los usuarios y:
@@ -258,7 +267,7 @@ El comando users:check-inactive recorre todos los usuarios y:
 - Envía primer aviso.
 - Envía segundo aviso.
 - Registra fechas en la tabla inactivities.
-
+---
 Código real del comando:
 ```php
 
@@ -269,6 +278,7 @@ $status = $user->inactivity ?: $user->inactivity()->create([
     'last_story_at' => $lastStory->created_at
 ]);
 ```
+---
 Primer aviso:
 ```php
 
@@ -279,6 +289,7 @@ if ($days >= 1 && $days < 5) {
     }
 }
 ```
+---
 Segundo aviso:
 ```php
 if ($days >= 5) {
@@ -328,82 +339,44 @@ El equipo de Agatha
 ---
 
 ### 4.14. Estructura de carpetas del backend (Laravel)
-├───app
-│   ├───Actions
-│   │   └───Fortify
-│   ├───Console
-│   │   └───Commands
-│   ├───Http
-│   │   ├───Controllers
-│   │   │   ├───Controller.php
-│   │   │   ├───StoryController.php
-│   │   │   └───Api
-│   │   │       ├───Controller.php
-│   │   │       └───StoryController.php
-│   │   └───Resources
-│   ├───Mail
-│   │   ├───FirstInactiveUserMail.php
-│   │   │   InactiveUserMail.php
-│   │   └───SecondInactiveUserMail.php
-│   ├───Models
-│   │   ├───RandomWord.php
-│   │   ├───Story.php
-│   │   ├───User.php
-│   │   └───UserInactivityStatus.php
-│   ├───Providers
-│   └───Traits
-│   │   └───WordCountTrait.php
-├───bootstrap
-│   └───cache
-├───config
-├───database
-│    ├───factories
-│    │       UserFactory.php
-│    │       
-│    ├───migrations
-│    │       0001_01_01_000000_create_users_table.php
-│    │       0001_01_01_000001_create_cache_table.php
-│    │       0001_01_01_000002_create_jobs_table.php
-│    │       2025_10_10_095825_create_stories_table.php
-│    │       2025_10_19_162629_add_two_factor_columns_to_users_table.php
-│    │       2025_10_29_072952_create_personal_access_tokens_table.php
-│    │       2025_11_12_132255_create_random_words_table.php
-│    │       2025_11_26_184153_create_user_inactivity_status_table.php
-│    │       
-│    └───seeders
-│            DatabaseSeeder.php
-│            RandomWordSeeder.php
-│            StorySeeder.php
-├───docs
-├───public
-├───resources
-│   ├───css
-│   ├───js
-│   └───views
-│       └───emails
-│             ├───inactive_first.blade.php
-│             └───inactive_second.blade.php
-├───routes
-│   ├───api.php
-│   ├───console.php
-│   └───web.php
-├───storage
-│   ├───app
-│   │   ├───private
-│   │   └───public
-│   ├───framework
-│   │   ├───cache
-│   │   │   └───data
-│   │   ├───sessions
-│   │   ├───testing
-│   │   └───views
-│   └───logs
-├───tests
-│   ├───Feature
-│   └───Unit
-└───vendor
+<div class="details">
+
+| app/                             | database/                                                       |
+| -------------------------------- | --------------------------------------------------------------- |
+| ├── Actions/Fortify              | ├── factories/UserFactory.php                                   |
+| ├── Console/Commands             | ├── migrations/                                                 |
+| ├── Http/Controllers/            | │ ├── 0001_01_01_000000_create_users_table.php                  |
+| │ ├── Controller.php             | │ ├── 2025_10_10_095825_create_stories_table.php                |
+| │ ├── StoryController.php        | │ ├── 2025_10_19_162629_add_two_factor_columns…                 |
+| │ └── Api/                       | │ ├── 2025_11_12_132255_create_random_words_table.php           |
+| │ ├── Controller.php             | │ └── 2025_11_26_184153_create_user_inactivity_status_table.php |
+| ├── Http/Resources               | ├── seeders/                                                    |
+| ├── Mail/                        | │ ├── DatabaseSeeder.php                                        |
+| │ ├── FirstInactiveUserMail.php  | │ ├── RandomWordSeeder.php                                      |
+| │ ├── InactiveUserMail.php       | │ └── StorySeeder.php                                           |
+| │ └── SecondInactiveUserMail.php |                                                                 |
+| ├── Models/                      | resources/views/emails/                                         |
+| │ ├── RandomWord.php             | ├── inactive_first.blade.php                                    |
+| │ ├── Story.php                  | └── inactive_second.blade.php                                   |
+| │ ├── User.php                   |                                                                 |
+| │ └── UserInactivityStatus.php   | routes/                                                         |
+| ├── Providers/                   | ├── api.php                                                     |
+| └── Traits/WordCountTrait.php    | ├── web.php                                                     |
+|                                  | └── console.php                                                 |
+
+| storage/                 | tests/ y resto                 |
+| ------------------------ | ------------------------------ |
+| ├── app/private + public | ├── tests/Feature/             |
+| ├── framework/           | ├── tests/Unit/                |
+| │ ├── cache/data         | ├── public/                    |
+| │ ├── sessions           | ├── docs/ (esta documentación) |
+| │ └── views              | ├── bootstrap/cache/           |
+| └── logs/                | ├── config/                    |
+|                          | └── vendor/                    |
 
 
+**Nota**: Las carpetas estándar de Laravel (`bootstrap`, `config`, `vendor`, `public`, etc.) se han resumido para que quepa todo en dos columnas.
+</div>
 ---
 
 ### 4.15. Comunicación Front–Back (resumen)
@@ -417,38 +390,26 @@ El equipo de Agatha
 ---
 
 ### 4.16. Estructura de carpetas del frontend (Vue)
-├───node_modules 
-├───public
-├───src
-│   ├───App.vue
-│   ├───main.js
-│   │
-│   ├───assets
-│   │       ├───style.css
-│   │       ├───components
-│   │       ├───Sidebar.vue
-│   │       ├───router
-│   │       ├───index.js
-│   │       ├───services
-│   │       ├───api.js
-│   │       ├───stores
-│   │       ├───auth.js
-│   │       └───stories.js
-│   │    
-│   └───views
-│       ├───DashboardView.vue
-│       ├───LoginView.vue
-│       ├───MainLayout.vue
-│       ├───MainView.vue
-│       ├───RegisterView.vue
-│       ├───StoriesView.vue
-│       └───StoryDetailView.vue
-├───.gitignore                 
-├───index.html            
-├───jsconfig.json         
-├───package-lock.json     
-├───package.json          
-├───postcss.config.js   
-├───README.md           
-├───tailwind.config.js  
-└───vite.config.js 
+<div class="details">
+
+| Raíz del proyecto      | src/ (código principal)    |
+| ---------------------- | -------------------------- |
+| ├── node_modules/      | ├── App.vue                |
+| ├── public/            | ├── main.js                |
+| ├── .gitignore         | ├── assets/style.css       |
+| ├── index.html         | ├── components/Sidebar.vue |
+| ├── jsconfig.json      | ├── router/index.js        |
+| ├── package.json       | ├── services/api.js        |
+| ├── package-lock.json  | ├── stores/                |
+| ├── postcss.config.js  | │ ├── auth.js              |
+| ├── tailwind.config.js | │ └── stories.js           |
+| ├── vite.config.js     | ├── views/                 |
+| └── README.md          | │ ├── DashboardView.vue    |
+|                        | │ ├── LoginView.vue        |
+|                        | │ ├── MainLayout.vue       |
+|                        | │ ├── MainView.vue         |
+|                        | │ ├── RegisterView.vue     |
+|                        | │ ├── StoriesView.vue      |
+|                        | │ └── StoryDetailView.vue  |
+
+</div>
