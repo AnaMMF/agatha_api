@@ -1,6 +1,7 @@
 ---
 marp: true
 theme: gaia
+size: 4:3                
 _class: lead
 paginate: true
 backgroundColor: #fff
@@ -10,21 +11,34 @@ style: |
         box-sizing: border-box;
         width: 100%;
         height: 100%;
-        padding: 1in; /* ajusta los márgenes aquí */
+        padding: 1in; 
         margin: 0;
-        font-size: calc(0.75vw + 0.75vh);
+        font-size: calc(1vw + 1vh);
     }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
 ---
 
-# **Agatha**
+<div class="container">
 
-## CICLO
+# PROYECTO DE CICLO DE G.S. DESARROLLO DE APLICACIONES WEB
 
-### Ana María Moya Fernández  
+# TÍTULO DEL PROYECTO: **AGATHA**
 
-#### IES Virgen del Carmen
+![width:280px](LOGO_DEPARTAMENTO.png)
 
-Diciembre 2025
+
+# **Autora:** Ana María Moya Fernández
+# **Fecha:** 15 de diciembre de 2025
+</div>
 
 ---
 
@@ -32,72 +46,69 @@ Diciembre 2025
 
 Agatha es una aplicación web diseñada para fomentar la escritura creativa mediante retos diarios.
 Cada vez que un usuario quiere escribir, recibe:
-  - Una palabra aleatoria.
-  - Un lugar aleatorio.
-Debe incluir ambos elementos en su historia antes de poder guardarla.
 
-:satisfied:
+- Una palabra aleatoria.
+- Un lugar aleatorio.
+  Debe incluir ambos elementos en su historia antes de poder guardarla.
+
 
 ### 1.1. Descripción general del proyecto
 
-La app permite: 
+La app permite:
 Crear historias; editarlas; listarlas; eliminarlas; revisarlas en cualquier momento.
 
 Cuenta además con:
-  - Sistema seguro de autenticación.
-  - API REST construida en Laravel.
-  - Interfaz en Vue 3 + Tailwind.
-  - Recuento en el back de palabras.
-  - Sistema de avisos por correo cuando el usuario lleva días sin escribir.
 
-
+- Sistema seguro de autenticación.
+- API REST construida en Laravel.
+- Interfaz en Vue 3 + Tailwind.
+- Recuento en el back de palabras.
+- Sistema de avisos por correo cuando el usuario lleva días sin escribir.
 
 ### 1.2. Objetivos
 
 ### 1.2.1. Objetivos del proyecto
 
-  - Crear una API REST funcional con Laravel.
-  - Implementar un sistema de autenticación seguro con Sanctum.
-  - Gestionar historias con operaciones CRUD.
-  - Validar que las historias incluyan la palabra y el lugar generados.
-  - Implementar un sistema de retos aleatorios.
-  - Construir un frontend usable en Vue 3.
-  - Añadir un sistema automático de avisos por inactividad.
-  - Mantener un código modular y escalable.
+- Crear una API REST funcional con Laravel.
+- Implementar un sistema de autenticación seguro con Sanctum.
+- Gestionar historias con operaciones CRUD.
+- Validar que las historias incluyan la palabra y el lugar generados.
+- Implementar un sistema de retos aleatorios.
+- Construir un frontend usable en Vue 3.
+- Añadir un sistema automático de avisos por inactividad.
+- Mantener un código modular y escalable.
 
 ---
+
 ### 1.2.2 Objetivos descartados o no implementados
-  - Panel de administración de palabras.
-  - Publicación pública de historias.
-  - Sistema de comentarios o interacciones.
-  - Estadísticas avanzadas.
 
-
+- Panel de administración de palabras.
+- Publicación pública de historias.
+- Sistema de comentarios o interacciones.
+- Estadísticas avanzadas.
 
 ### 1.3. Materiales y recursos utilizados
-  - Hardware.
-  - Portátil personal (Windows).
-  - Servidor local mediante Laragon, aunque en un principio use xampp.
-  - Laravel 12
-  - PHP 8.3
-  - MySQL
-  - Vue 3 + Vite
-  - Tailwind CSS
-  - Mailtrap (pruebas de correo).
-  - Git y GitLab
-  - Visual Studio Code
 
-
+- Portátil personal (Windows).
+- Servidor local mediante Laragon, aunque en un principio use xampp.
+- Laravel 12
+- PHP 8.3
+- MySQL
+- Vue 3 + Vite
+- Tailwind CSS
+- Mailtrap (pruebas de correo).
+- Git y GitLab
+- Visual Studio Code
+- Railway (preparación de base de datos en producción)
 
 # 2. Tecnologías
 
-En este capítulo se detalla las tecnologías principales utilizadas en el proyecto y la razón por la que fueron elegidas. 
-
-
+En este capítulo se detalla las tecnologías principales utilizadas en el proyecto y la razón por la que fueron elegidas.
 
 ## 2.1 Backend — Laravel
 
 #### **Tecnologías empleadas:**
+
 - **Laravel 12**
 - **PHP 8.3**
 - **MySQL**
@@ -107,24 +118,23 @@ En este capítulo se detalla las tecnologías principales utilizadas en el proye
 ---
 
 #### **¿Por qué Laravel?**
+
 Laravel ofrece una estructura muy clara cuando la aplicación a desarrollar requiere autenticación, validación, controladores, modelos y una API REST como es el caso de este proyecto.
 
 Sus ventajas:
 
 - Generación rápida de endpoints y validaciones
-- Integración natural con MySQL mediante Eloquent  
-- Sencillez al crear middleware, notificaciones y colas  
-- Sistema de autenticación seguro con Sanctum  
-- Arquitectura perfecta para una API REST modular  
-
+- Integración natural con MySQL mediante Eloquent
+- Sencillez al crear middleware, notificaciones y colas
+- Sistema de autenticación seguro con Sanctum
+- Arquitectura perfecta para una API REST modular
 
 Se opta por Laravel porque permite desarrollar de forma ordenada y escalable aprovechando sus facades y servicios.
-
-
 
 ## 2.2 Frontend — Vue 3 + Vite
 
 #### **Tecnologías empleadas**
+
 - **Vue 3 (Composition API)** — Framework principal para la construcción de la interfaz.
 - **Vite** — Herramienta de desarrollo y build ultrarrápida.
 - **Tailwind CSS** — Framework utilitario para estilos rápidos y responsivos.
@@ -132,46 +142,48 @@ Se opta por Laravel porque permite desarrollar de forma ordenada y escalable apr
 - **Pinia** — Gestión global del estado (sesión, usuario, autenticación).
 - **Fetch API** — Utilizado para todas las peticiones al backend.
 
-
 #### **¿Por qué Vue 3?**
+
 Quería una interfaz limpia, rápida y sencilla de mantener, con una herramienta que tuviera una curva de aprendizaje moderada.  
 Vue 3 destaca porque:
 
-- Tiene curva de aprendizaje suave  
-- La Composition API permite organizar mejor la lógica  
-- Reactividad muy sencilla sin necesidad de librerías adicionales  
-- Ecosistema muy ligero comparado con React  
+- Tiene curva de aprendizaje suave
+- La Composition API permite organizar mejor la lógica
+- Reactividad muy sencilla sin necesidad de librerías adicionales
+- Ecosistema muy ligero comparado con React
 
 ---
+
 Además, **Vite** aporta:
-- Recarga ultrarrápida en desarrollo  
-- Builds muy optimizadas  
+
+- Recarga ultrarrápida en desarrollo
+- Builds muy optimizadas
 
 Y **Tailwind CSS** fue elegido porque:
+
 - Ya lo había usado antes y me resulta muy sencillo e intuitivo
-- Acelera mucho el maquetado  
-- Permite un estilo consistente sin escribir toneladas de CSS  
+- Acelera mucho el maquetado
+- Permite un estilo consistente sin escribir toneladas de CSS
 - Es ideal para interfaces modernas y limpias (justo lo que buscaba para Agatha)
-
-
 
 ## 2.3 Herramientas de Desarrollo
 
 **Principales herramientas utilizadas:**
-- **Visual Studio Code** como editor principal  
-- **Postman** para probar la API durante el desarrollo  
-- **Git + GitLab** para control de versiones  
-- **Laragon** como servidor local rápido  
+
+- **Visual Studio Code** como editor principal
+- **Postman** para probar la API durante el desarrollo
+- **Git + GitLab** para control de versiones
+- **Laragon** como servidor local rápido
 - **Chrome DevTools** para depuración de frontend
-
-
 
 ## 2.4 Gestión de Base de Datos
 
 #### **Tecnología empleada:**
+
 **MySQL 8**
 
 **¿Por qué MySQL?**
+
 - Es estable y compatible con Laravel.
 - Facilidad para definir una estructura y relaciones entre usuarios, historias, palabras y lugares.
 - Perfecta para estructuras relacionales y consultas sencillas.
@@ -181,17 +193,13 @@ MySQL me encajaba con el proyecto por ser este pensado para una estructura clara
 
 ---
 
-
 # 3. Análisis
 
 En este capítulo se recogen los elementos clave que definen cómo debe funcionar la aplicación Agatha a nivel funcional y estructural. Incluye los casos de uso principales, el diagrama entidad-relación lógico de la base de datos y varios diagramas que ayudan a entender los flujos internos, como el sistema automático de avisos por inactividad.
 
-
-
 ### 3.1. Casos de Uso
 
 A continuación se representan los casos de uso básicos del sistema, centrándonos en la interacción entre el usuario y la plataforma.
-
 
 ![Diagrama casos de uso](Uso.drawio.svg)
 
@@ -211,34 +219,76 @@ Este diagrama muestra cómo evoluciona el estado de un usuario dentro del sistem
 ![alt text](Inactividad.drawio.svg)
 
 ---
+
 ### 3.4. Diagrama de Secuencia (Proceso de envío automático)
 
 Este diagrama explica cómo se ejecuta el comando users:check-inactive y cómo se envían los correos.
-
 
 ![alt text](Envio.drawio.svg)
 
 ---
 
 ### 3.5. Requisitos del Proyecto
+
 Requisitos funcionales:
-  - El usuario debe poder registrarse, iniciar y cerrar sesión.
-  - El usuario puede escribir nuevas historias.
-  - Puede consultar la lista de historias escritas.
-  - Puede ver el detalle de una historia.
-  - Puede editar o eliminar historias.
-  - El sistema debe enviar un email tras 7 días sin actividad.
-  - El sistema debe enviar un segundo email tras 25 días sin actividad.
-  - Los correos deben enviarse solo una vez por cada periodo.
 
-
+- El usuario debe poder registrarse, iniciar y cerrar sesión.
+- El usuario puede escribir nuevas historias.
+- Puede consultar la lista de historias escritas.
+- Puede ver el detalle de una historia.
+- Puede editar o eliminar historias.
+- El sistema debe enviar un email tras 7 días sin actividad.
+- El sistema debe enviar un segundo email tras 25 días sin actividad.
+- Los correos deben enviarse solo una vez por cada periodo.
 
 Requisitos no funcionales:
-  - La API debe seguir el estándar REST.
-  - La base de datos debe garantizar integridad y relaciones.
-  - La aplicación debe ser segura mediante tokens Sanctum.
-  - Debe ser desplegable tanto en entorno local como remoto.
-  - Los tiempos de respuesta deben ser inferiores a 200ms en operaciones básicas.
+
+- La API debe seguir el estándar REST.
+- La base de datos debe garantizar integridad y relaciones.
+- La aplicación debe ser segura mediante tokens Sanctum.
+- Debe ser desplegable tanto en entorno local como remoto.
+- Los tiempos de respuesta deben ser inferiores a 200ms en operaciones básicas.
+
+---
+
+### 3.6 Tabla Resumen de Endpoints de la API
+
+| Categoría | Endpoint | Método | Auth | Descripción | Campos |
+|----------|----------|--------|------|-------------|---------|
+| **Autenticación** | `/register` | POST | No | Registro de usuario | name, email, password, password_confirmation |
+| **Autenticación** | `/login` | POST | No | Inicio de sesión. Devuelve token Sanctum | email, password |
+| **Autenticación** | `/logout` | POST | Sí | Cierra sesión y elimina todos los tokens del usuario | — |
+| **Usuario** | `/me` | GET | Sí | Datos del usuario autenticado | — |
+| **Usuario** | `/user` | PUT | Sí | Actualiza el perfil del usuario | name?, email?, password?, password_confirmation? |
+| **Historias** | `/story/random` | GET | Sí | Devuelve palabra y lugar aleatorios | — |
+| **Historias** | `/story/list` | GET | Sí | Lista todas las historias del usuario autenticado | — |
+| **Historias** | `/story/store` | POST | Sí | Crea una historia nueva | title?, content, user_id, word, place |
+| **Historias** | `/story/show?storyToken=...` | GET | Sí | Devuelve los datos de una historia concreta | storyToken |
+| **Historias** | `/story/update` | PUT | Sí | Actualiza una historia del usuario | storyToken, content, user_id, title? |
+| **Historias** | `/story/destroy?storyToken=...` | DELETE | Sí | Elimina una historia | storyToken |
+| **Inactividad** | *(sin endpoint)* | — | — | Tarea automática ejecutada vía cron | — |
+
+---
+
+
+### 3.7. Configuración Base
+
+**URL base de la API:**  
+`http://agatha-api.test/api`
+
+**Formato de datos:**  
+JSON (tanto para peticiones como para respuestas)
+
+**Autenticación:**  
+Bearer Token obligatorio para todos los endpoints protegidos  
+(se envía en la cabecera `Authorization: Bearer <token>`)
+
+**Duración del token:**  
+12 horas (generado mediante Laravel Sanctum)
+
+**Requisitos para acceder a recursos protegidos:**  
+- Estar autenticado  
+- Enviar el token válido en cada petición  
 
 ---
 
@@ -247,20 +297,16 @@ Requisitos no funcionales:
 
 En este apartado se describen los componentes más relevantes del proyecto, tanto del **backend en Laravel** como del **frontend en Vue 3**, junto con ejemplos reales de código utilizados.
 
-
-
 ### 4.1. Autenticación con Laravel Sanctum
 
 Agatha-api utiliza **Laravel Sanctum** para gestionar autenticación mediante tokens.
 
 El flujo es el siguiente:
 
-1. El usuario inicia sesión desde el frontend.  
-2. El backend valida las credenciales.  
-3. Si son correctas, genera un **token con duración de 12 horas**.  
+1. El usuario inicia sesión desde el frontend.
+2. El backend valida las credenciales.
+3. Si son correctas, genera un **token con duración de 12 horas**.
 4. El token se guarda en LocalStorage y se envía en cada petición con Axios.
-
-
 
 #### Controlador AuthController
 
@@ -294,6 +340,7 @@ public function login(Request $request)
 El registro exige contraseñas fuertes (mínimo 8 caracteres, mayúsculas, minúsculas, números y símbolos).
 
 #### Validación de registro:
+
 ```php
 
 $data = $request->validate([
@@ -306,7 +353,9 @@ $data = $request->validate([
     ],
 ]);
 ```
+
 #### Actualización de usuario:
+
 ```php
 $data = $request->validate([
     'name' => 'sometimes|string|max:255',
@@ -319,7 +368,6 @@ $data = $request->validate([
 ]);
 
 ```
-
 
 ### 4.3. Frontend de Autenticación (Vue 3 + Pinia)
 
@@ -336,8 +384,10 @@ api.interceptors.request.use((config) => {
   return config
 })
 ```
+---
 
 #### Ejemplo real: vista LoginView.vue
+
 ```php
 
 async function handleLogin() {
@@ -354,7 +404,6 @@ async function handleLogin() {
 }
 ```
 
----
 
 ### 4.4. Rutas API
 
@@ -379,7 +428,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 ```
 
-
 ### 4.5. Generación de palabra y lugar aleatorios
 
 Agatha usa una única tabla random_words, con dos tipos:
@@ -392,7 +440,7 @@ place → lugares
 $word = RandomWord::where('type', 'word')->inRandomOrder()->value('value');
 $place = RandomWord::where('type', 'place')->inRandomOrder()->value('value');
 ```
-
+---
 
 ### 4.6. Validación de historias
 
@@ -409,7 +457,7 @@ if (
     ], 422);
 }
 ```
----
+
 
 ### 4.7. Guardado de historias con token único
 
@@ -425,8 +473,8 @@ $story = Story::create([
 ]);
 ```
 
-
 ### 4.8. Reset de inactividad al escribir
+
 ```php
 $status = $story->user->inactivity;
 
@@ -443,10 +491,12 @@ if ($status) {
 }
 
 ```
-
+---
 
 ### 4.9. Frontend de historias (Vue)
+
 #### Obtener historias
+
 ```php
 export async function getStories() {
   const { data } = await api.get('/story/list')
@@ -455,6 +505,7 @@ export async function getStories() {
 ```
 
 #### Crear historia
+
 ```php
 export async function createStory(story) {
   return api.post('/story/store', {
@@ -466,9 +517,10 @@ export async function createStory(story) {
   })
 }
 ```
----
+
 
 ### 4.10. Formateo de fechas (frontend)
+
 ```php
 function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString('es-ES', {
@@ -488,7 +540,10 @@ El comando users:check-inactive recorre todos los usuarios y:
 - Envía segundo aviso.
 - Registra fechas en la tabla inactivities.
 
+---
+
 Código real del comando:
+
 ```php
 
 $lastStory = $user->stories()->latest()->first();
@@ -498,7 +553,9 @@ $status = $user->inactivity ?: $user->inactivity()->create([
     'last_story_at' => $lastStory->created_at
 ]);
 ```
+
 Primer aviso:
+
 ```php
 
 if ($days >= 1 && $days < 5) {
@@ -508,7 +565,9 @@ if ($days >= 1 && $days < 5) {
     }
 }
 ```
+
 Segundo aviso:
+
 ```php
 if ($days >= 5) {
     if (!$status->second_email_sent_at) {
@@ -518,9 +577,11 @@ if ($days >= 5) {
 }
 
 ```
+
 ---
 
 ### 4.12. Mailable real
+
 ```php
 class FirstInactiveUserMail extends Mailable
 {
@@ -538,8 +599,8 @@ class FirstInactiveUserMail extends Mailable
 }
 ```
 
-
 ### 4.13. Plantilla Markdown del email
+
 ```php
 @component('mail::message')
 # ¡Te echamos de menos, {{ $user->name }}!
@@ -554,6 +615,7 @@ Gracias,<br>
 El equipo de Agatha
 @endcomponent
 ```
+
 ---
 
 ### 4.14. Estructura de carpetas del backend (Laravel)
@@ -561,42 +623,42 @@ El equipo de Agatha
 <details>
 <summary><strong>Haz clic para mostrar/ocultar el árbol completo de carpetas</strong></summary>
 
-| app/                                   | database/                              |
-|----------------------------------------|----------------------------------------|
-| ├── Actions/Fortify                    | ├── factories/UserFactory.php          |
-| ├── Console/Commands                   | ├── migrations/                        |
-| ├── Http/Controllers/                  | │   ├── 0001_01_01_000000_create_users_table.php |
-| │   ├── Controller.php                 | │   ├── 2025_10_10_095825_create_stories_table.php |
-| │   ├── StoryController.php            | │   ├── 2025_10_19_162629_add_two_factor_columns… |
-| │   └── Api/                            | │   ├── 2025_11_12_132255_create_random_words_table.php |
-| │       ├── Controller.php             | │   └── 2025_11_26_184153_create_user_inactivity_status_table.php |
-| ├── Http/Resources                     | ├── seeders/                           |
-| ├── Mail/                              | │   ├── DatabaseSeeder.php             |
-| │   ├── FirstInactiveUserMail.php      | │   ├── RandomWordSeeder.php           |
-| │   ├── InactiveUserMail.php           | │   └── StorySeeder.php                |
-| │   └── SecondInactiveUserMail.php     |                                        |
-| ├── Models/                            | resources/views/emails/                |
-| │   ├── RandomWord.php                 | ├── inactive_first.blade.php           |
-| │   ├── Story.php                      | └── inactive_second.blade.php          |
-| │   ├── User.php                       |                                        |
-| │   └── UserInactivityStatus.php       | routes/                                |
-| ├── Providers/                         | ├── api.php                            |
-| └── Traits/WordCountTrait.php          | ├── web.php                            |
-|                                        | └── console.php                        |
+| app/                             | database/                                                       |
+| -------------------------------- | --------------------------------------------------------------- |
+| ├── Actions/Fortify              | ├── factories/UserFactory.php                                   |
+| ├── Console/Commands             | ├── migrations/                                                 |
+| ├── Http/Controllers/            | │ ├── 0001_01_01_000000_create_users_table.php                  |
+| │ ├── Controller.php             | │ ├── 2025_10_10_095825_create_stories_table.php                |
+| │ ├── StoryController.php        | │ ├── 2025_10_19_162629_add_two_factor_columns…                 |
+| │ └── Api/                       | │ ├── 2025_11_12_132255_create_random_words_table.php           |
+| │ ├── Controller.php             | │ └── 2025_11_26_184153_create_user_inactivity_status_table.php |
+| ├── Http/Resources               | ├── seeders/                                                    |
+| ├── Mail/                        | │ ├── DatabaseSeeder.php                                        |
+| │ ├── FirstInactiveUserMail.php  | │ ├── RandomWordSeeder.php                                      |
+| │ ├── InactiveUserMail.php       | │ └── StorySeeder.php                                           |
+| │ └── SecondInactiveUserMail.php |                                                                 |
+| ├── Models/                      | resources/views/emails/                                         |
+| │ ├── RandomWord.php             | ├── inactive_first.blade.php                                    |
+| │ ├── Story.php                  | └── inactive_second.blade.php                                   |
+| │ ├── User.php                   |                                                                 |
+| │ └── UserInactivityStatus.php   | routes/                                                         |
+| ├── Providers/                   | ├── api.php                                                     |
+| └── Traits/WordCountTrait.php    | ├── web.php                                                     |
+|                                  | └── console.php                                                 |
 
-| storage/                               | tests/ y resto                         |
-|----------------------------------------|----------------------------------------|
-| ├── app/private + public               | ├── tests/Feature/                     |
-| ├── framework/                         | ├── tests/Unit/                        |
-| │   ├── cache/data                     | ├── public/                            |
-| │   ├── sessions                       | ├── docs/ (esta documentación)         |
-| │   └── views                          | ├── bootstrap/cache/                   |
-| └── logs/                              | ├── config/                            |
-|                                        | └── vendor/                            |
+| storage/                 | tests/ y resto                 |
+| ------------------------ | ------------------------------ |
+| ├── app/private + public | ├── tests/Feature/             |
+| ├── framework/           | ├── tests/Unit/                |
+| │ ├── cache/data         | ├── public/                    |
+| │ ├── sessions           | ├── docs/ (esta documentación) |
+| │ └── views              | ├── bootstrap/cache/           |
+| └── logs/                | ├── config/                    |
+|                          | └── vendor/                    |
 
 </details>
 
-**Nota**: Las carpetas estándar de Laravel (`bootstrap`, `config`, `vendor`, `public`, etc.) se han resumido para que quepa todo en dos columnas sin scroll horizontal.
+**Nota**: Las carpetas estándar de Laravel (`bootstrap`, `config`, `vendor`, `public`, etc.) se han resumido para que quepa todo en dos columnas.
 
 ---
 
@@ -609,45 +671,43 @@ El equipo de Agatha
 - Backend devuelve JSON estructurado.
 - Vue muestra errores y mensajes adecuados.
 
-
 ### 4.16. Estructura de carpetas del frontend (Vue 3 + Vite + Pinia + Vue Router)
 
 <details>
 <summary><strong>Haz clic para mostrar/ocultar el árbol completo del frontend</strong></summary>
 
-| Raíz del proyecto                          | src/ (código principal)                          |
-|--------------------------------------------|--------------------------------------------------|
-| ├── node_modules/                          | ├── App.vue                                      |
-| ├── public/                                | ├── main.js                                      |
-| ├── .gitignore                             | ├── assets/style.css                             |
-| ├── index.html                             | ├── components/Sidebar.vue                       |
-| ├── jsconfig.json                          | ├── router/index.js                              |
-| ├── package.json                           | ├── services/api.js                              |
-| ├── package-lock.json                      | ├── stores/                                      |
-| ├── postcss.config.js                      | │   ├── auth.js                                  |
-| ├── tailwind.config.js                     | │   └── stories.js                               |
-| ├── vite.config.js                         | ├── views/                                       |
-| └── README.md                              | │   ├── DashboardView.vue                        |
-|                                            | │   ├── LoginView.vue                            |
-|                                            | │   ├── MainLayout.vue                           |
-|                                            | │   ├── MainView.vue                             |
-|                                            | │   ├── RegisterView.vue                         |
-|                                            | │   ├── StoriesView.vue                          |
-|                                            | │   └── StoryDetailView.vue                      |
+| Raíz del proyecto      | src/ (código principal)    |
+| ---------------------- | -------------------------- |
+| ├── node_modules/      | ├── App.vue                |
+| ├── public/            | ├── main.js                |
+| ├── .gitignore         | ├── assets/style.css       |
+| ├── index.html         | ├── components/Sidebar.vue |
+| ├── jsconfig.json      | ├── router/index.js        |
+| ├── package.json       | ├── services/api.js        |
+| ├── package-lock.json  | ├── stores/                |
+| ├── postcss.config.js  | │ ├── auth.js              |
+| ├── tailwind.config.js | │ └── stories.js           |
+| ├── vite.config.js     | ├── views/                 |
+| └── README.md          | │ ├── DashboardView.vue    |
+|                        | │ ├── LoginView.vue        |
+|                        | │ ├── MainLayout.vue       |
+|                        | │ ├── MainView.vue         |
+|                        | │ ├── RegisterView.vue     |
+|                        | │ ├── StoriesView.vue      |
+|                        | │ └── StoryDetailView.vue  |
 
 </details>
 
 **Resumen rápido:**
 
 src/
-├── components/     → Sidebar.vue
-├── router/         → index.js
-├── services/       → api.js (llamadas al backend Laravel)
-├── stores/         → Pinia: auth.js + stories.js
-└── views/          → 7 vistas principales (Login, Register, Dashboard, Stories…)
+├── components/ → Sidebar.vue
+├── router/ → index.js
+├── services/ → api.js (llamadas al backend Laravel)
+├── stores/ → Pinia: auth.js + stories.js
+└── views/ → 7 vistas principales (Login, Register, Dashboard, Stories…)
 
 ---
-
 
 # 5. Conclusiones
 
@@ -656,23 +716,17 @@ src/
 El desarrollo de Agatha ha dado como resultado una API sólida, estructurada y funcional, pensada para ofrecer una experiencia fluida en una aplicación creativa centrada en la escritura.  
 Se han implementado todas las características principales planteadas al inicio:
 
-
-
-- Sistema de autenticación seguro con Laravel Sanctum.  
-- Gestión completa de historias con validaciones, aleatoriedad y formato.  
-- Generación automática de palabras/lugares aleatorios para fomentar la creatividad.  
-- Sistema automatizado de notificaciones por inactividad mediante comandos programados.  
+- Sistema de autenticación seguro con Laravel Sanctum.
+- Gestión completa de historias con validaciones, aleatoriedad y formato.
+- Generación automática de palabras/lugares aleatorios para fomentar la creatividad.
+- Sistema automatizado de notificaciones por inactividad mediante comandos programados.
 - Estructura clara de rutas y controladores que permite escalar funcionalidades.
 
 En conjunto, Agatha es una base estable para una aplicación real.
 
-
-
 ### 5.2. Aprendizajes Valiosos
 
 Este proyecto ha supuesto un salto importante en mis conocimientos tanto de backend como de frontend, además de en herramientas de desarrollo reales que no había utilizado antes. A lo largo del desarrollo he aprendido:
-
-
 
 ### Laravel y desarrollo backend
 
@@ -681,9 +735,9 @@ Este proyecto ha supuesto un salto importante en mis conocimientos tanto de back
 - Programación de tareas automáticas (**Scheduler**).
 - Creación y ejecución de **Console Commands**, y cómo integrarlos con lógica real del proyecto.
 
+---
 
-
-###  Vue 3 + Vite (Frontend)
+### Vue 3 + Vite (Frontend)
 
 Empece el proyecto sin haber trabajado antes con Vue, y ha sido una de las partes donde más he aprendido:
 
@@ -697,29 +751,31 @@ Empece el proyecto sin haber trabajado antes con Vue, y ha sido una de las parte
 - Validación de formularios y visualización de errores provenientes del backend.
 - Experiencia real con comunicación asíncrona con la API.
 
----
 
 ### Infraestructura local y herramientas nuevas
 
 Este proyecto también me ha permitido aprender varias herramientas que nunca había usado:
 
-- **Laragon**  
+- **Laragon**
+
   - Instalación, configuración y uso como entorno de desarrollo.
   - Manejo del host virtual automático (`agatha-api.test`).
 
-- **Mailtrap**  
+- **Mailtrap**
+
   - Configuración SMTP para pruebas de envío de emails.
   - Lectura y depuración de correos sin afectar a usuarios reales.
 
-- **Scheduler y Cron**  
+- **Scheduler y Cron**
+
   - Ejecución de tareas recurrentes con `php artisan schedule:work`.
   - Cómo funcionan los crons reales en servidores Linux.
 
-- **Comandos personalizados**  
+- **Comandos personalizados**
   - Crear tareas que se ejecutan desde CLI con `php artisan`.
   - Integrarlos con el scheduler.
 
-
+---
 
 ### Gestión de errores y depuración
 
@@ -728,52 +784,87 @@ Este proyecto también me ha permitido aprender varias herramientas que nunca ha
 - Manejo de excepciones con `try/catch` y mensajes JSON claros.
 - Aprendí la importancia de devolver siempre un formato consistente desde el backend.
 
-
-
 ### Git y documentación
 
 - Organización del proyecto con Git/GitLab.
 - Creación de documentación en **Markdown**, incluyendo diagramas, tablas, ejemplos y fragmentos de código.
 
-
-
 En conjunto, este proyecto me ha permitido aprender cómo se construye una aplicación completa de principio a fin: desde la base de datos, pasando por la API, hasta la interfaz web final que consume esa API.
 
 Además de lo técnico, también ha sido un ejercicio de planificación y resolución de problemas, especialmente al depurar comportamientos inesperados con fechas, validaciones o límites de servicio.
 
----
 
 ### 5.3. Cosas que haría de otra manera
 
 Con lo aprendido durante el desarrollo, hay ciertos puntos que replantearía si empezara de cero:
 
-- **Implementar pruebas automatizadas** para evitar errores en funciones sensibles como el scheduler o los mailables.  
-- **Introducir un sistema de colas (queues)** para el envío de correos, evitando bloqueos por límites de envío.  
+- **Implementar pruebas automatizadas** para evitar errores en funciones sensibles como el scheduler o los mailables.
+- **Introducir un sistema de colas (queues)** para el envío de correos, evitando bloqueos por límites de envío.
 - **Definir la arquitectura de base de datos desde el principio**, incluyendo tablas auxiliares que se añadieron más tarde.
 
 Cada uno de estos cambios facilitaría el mantenimiento a largo plazo.
 
-
+---
 
 ### 5.4. Posibles Mejoras Futuras
 
 El proyecto ha quedado bien definido, pero aun puede mejorarse:
 
-- Añadir un panel estadístico para que el usuario vea su actividad (días consecutivos, número de historias, etc.).  
-- Implementar etiquetas, categorías o filtros para organizar historias.  
+- Añadir un panel estadístico para que el usuario vea su actividad (días consecutivos, número de historias, etc.).
+- Implementar etiquetas, categorías o filtros para organizar historias.
 - Permitir compartir historias mediante enlaces públicos.
 - Incluir un modo competitivo (reto diario, rankings, etc.).
-
+- Autoguardado de la historia en borradores mientras que no se pulse en guardar para no perder el trabajo nunca.
+- Boton para mostrar contraseña al hacer login, cambio de contraseña y registro.
+- Modo oscuro/claro del sitio web.
 
 
 ### 5.5. Continuidad y Planes
 
 Una vez finalizado este proyecto, las opciones de continuidad son amplias:
 
-- Integrar un editor de texto con estilos, emoticonos, etc.  
-- Preparar un despliegue en producción (Railway, Render, Forge…).  
+- Integrar un editor de texto con estilos, emoticonos, etc.
+- Preparar un despliegue en producción (Railway, Vercel, Forge…).
 - Convertirlo en un proyecto personal a largo plazo para practicar nuevas tecnologías.
 
+
+### 5.6. Despliegue y Entorno de Producción
+
+Aunque el proyecto se ha desarrollado y probado principalmente en entorno local con Laragon, se ha preparado la base de datos para un futuro despliegue en producción utilizando **Railway** como plataforma cloud.
+
+#### Migración de la base de datos a Railway
+
+- Se exportó la base de datos completa desde phpMyAdmin (incluyendo estructura, datos de prueba, usuarios, historias, palabras y lugares).
+- Se importó exitosamente en un servicio MySQL de Railway.
+- La conexión remota desde el entorno local de Laravel se configuró correctamente modificando las variables de entorno en `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=[host Railway]
+DB_PORT=[puerto Railway]
+DB_DATABASE=[nombre BBDD]
+DB_USERNAME=[usuario]
+DB_PASSWORD=[contraseña]
+```
+---
+Se verificó la conexión correcta ejecutando comandos como:
+```Bash
+php artisan config:clear
+php artisan cache:clear
+php artisan tinker
+```
+Y dentro de tinker:
+```PHP
+DB::connection()->getPdo();
+```
+El resultado confirmó la conexión exitosa a través del proxy de Railway (maglev.proxy.rlwy.net).
+
+
+#### Ventajas de esta configuración
+
+- Permite trabajar en desarrollo local contra datos reales en la nube (usuarios de prueba, historias existentes, estado de inactividad).
+- Facilita pruebas más realistas del sistema de avisos por inactividad y del comportamiento general de la aplicación.
+- Prepara el terreno para un despliegue completo futuro: el backend Laravel puede subirse a Railway. El frontend Vue podría desplegarse en Vercel.
 ---
 
 # 6. Bibliografía
@@ -808,6 +899,9 @@ A continuación se recoge una lista de los recursos, documentación, tutoriales 
   https://laravel.com/docs/helpers  
   Sirvió para generar tokens únicos (`Str::uuid()`) y manipular cadenas y fechas.
 
+---
+
+
 - **Carbon – Manejo de fechas en PHP**  
   https://carbon.nesbot.com/docs/  
   Recurso clave para trabajar con intervalos de tiempo, diferencias en días, formateo de fechas y operaciones complejas con timestamps.
@@ -823,12 +917,3 @@ A continuación se recoge una lista de los recursos, documentación, tutoriales 
 - **StackOverflow**  
   https://stackoverflow.com/  
   Fuente de soluciones rápidas a errores concretos relacionados con SMTP, migraciones, relaciones mal definidas y problemas comunes con el scheduler.
-
-
-
-
-
-
-
-
-

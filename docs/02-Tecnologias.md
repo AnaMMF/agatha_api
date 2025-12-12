@@ -2,6 +2,14 @@
 marp: true
 theme: gaia
 paginate: true
+lang: es
+size: 16:9                
+
+title: "Tecnologías"
+class: invert          
+titlepage: true
+titlepage-rule-color: "360049"
+titlepage-rule-height: 6
 ---
 
 # 2. Tecnologías
@@ -21,20 +29,15 @@ En este capítulo se detalla las tecnologías principales utilizadas en el proye
 
 ---
 #### **¿Por qué Laravel?**
-Laravel ofrece una estructura muy clara cuando la aplicación a desarrollar requiere autenticación, validación, controladores, modelos y una API REST como es el caso de este proyecto.
 
-Sus ventajas:
+Lo elegí desde el principio porque ya tenía algo de experiencia con este framework. Conocía su flujo de trabajo, las migraciones, Eloquent y el sistema de rutas.
 
-- Generación rápida de endpoints y validaciones  
-- Integración natural con MySQL mediante Eloquent  
+Esta familiaridad permitió:
+- Acelerar notablemente el desarrollo de la API (endpoints funcionales en la primera semana).
+- Reutilizar patrones ya conocidos (Controladores, Traits, Mailables, colas).
 ---
 
-- Sencillez al crear middleware, notificaciones y colas  
-- Sistema de autenticación seguro con Sanctum  
-- Arquitectura perfecta para una API REST modular  
-
-
-Se opta por Laravel porque permite desarrollar de forma ordenada y escalable aprovechando sus facades y servicios.
+Durante el proyecto se confirmó que Laravel era la opción más adecuada técnicamente para los requisitos funcionales (gestión de usuarios inactivos, envío programado de correos, control de contribución por palabras, etc.).
 
 ---
 
@@ -97,4 +100,4 @@ Y **Tailwind CSS** fue elegido porque:
 
 MySQL me encajaba con el proyecto por ser este pensado para una estructura clara y estricta, donde las relaciones entre entidades son necesarias.
 
----
+

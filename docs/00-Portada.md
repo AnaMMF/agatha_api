@@ -1,17 +1,37 @@
 ---
-title: "Agatha-Fomenta tu escritura"
-author: [Ana María Moya Fernández]
-date: "Diciembre 2025"
-keywords: [programación]
-lang: "es"
-titlepage: true,
-titlepage-text-color: "FFFFFF"
+marp: true
+theme: gaia              
+lang: es
+size: 16:9                
+
+title: "Agatha – Fomenta tu escritura"
+class: invert          
+titlepage: true
 titlepage-rule-color: "360049"
-titlepage-rule-height: 0
-titlepage-background: "docs/background.pdf"
-toc: false
+titlepage-rule-height: 6
+
 ---
 
-\pagebreak
-\tableofcontents
-\pagebreak
+<div class="container">
+
+###### PROYECTO DE CICLO DE G.S. DESARROLLO DE APLICACIONES WEB
+
+###### TÍTULO DEL PROYECTO:**AGATHA**
+
+![width:280px](LOGO_DEPARTAMENTO.png)
+
+
+**Autora: Ana María Moya Fernández**
+**Fecha:** 15 de diciembre de 2025
+</div>
+
+<style>
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+</style>

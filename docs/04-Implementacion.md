@@ -2,6 +2,14 @@
 marp: true
 theme: gaia
 paginate: true
+lang: es
+size: 16:9                
+
+title: "Implementación"
+class: invert          
+titlepage: true
+titlepage-rule-color: "360049"
+titlepage-rule-height: 6
 ---
 
 # 4. Implementación

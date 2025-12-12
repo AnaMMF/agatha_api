@@ -2,6 +2,14 @@
 marp: true
 theme: gaia
 paginate: true
+lang: es
+size: 16:9                
+
+title: "Introducción"
+class: invert          
+titlepage: true
+titlepage-rule-color: "360049"
+titlepage-rule-height: 6
 ---
 # Introducción
 
@@ -119,6 +127,7 @@ Cuenta además con:
   - Mantener un código modular y escalable.
 
 ---
+
 ### 1.4.2. Objetivos descartados o no implementados
   - Panel de administración de palabras.
   - Publicación pública de historias.
@@ -128,7 +137,6 @@ Cuenta además con:
 
 
 ### 1.5. Materiales y recursos utilizados
-  - Hardware.
   - Portátil personal (Windows).
 
 ---
@@ -142,4 +150,4 @@ Cuenta además con:
   - Mailtrap (pruebas de correo).
   - Git y GitLab
   - Visual Studio Code
-
+  - Railway (preparación de base de datos en producción)
