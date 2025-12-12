@@ -1,7 +1,7 @@
 ```markdown
 # Agatha - Backend API
 
-Backend desarrollado en Laravel 10, encargado de gestionar:
+Backend desarrollado en Laravel 12, encargado de gestionar:
 
 - API REST de usuarios e historias
 - Autenticación con Sanctum
@@ -121,18 +121,3 @@ $schedule->command('users:check-inactive')->daily();
 ```
 
 Envía emails a los 7 y 25 días de inactividad.
-
-## Estructura relevante del proyecto
-
-```
-app/
-  ├─ Http/Controllers/
-  ├─ Models/
-  ├─ Mail/
-  └─ Console/
-database/
-  └─ migrations/
-routes/
-  └─ api.php
-```
-```
